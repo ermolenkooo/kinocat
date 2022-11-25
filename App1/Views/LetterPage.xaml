@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="App1.Views.LetterPage"
+             Background="white">
+    <ContentPage.Content>
+        <StackLayout HorizontalOptions="Center">
+            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Background="white" Margin="0, 0, 0, 0">
+                <Image Source="minicircle.png" Margin="10, 0"></Image>
+                <Label Text="Рецензия" FontSize="30" TextColor="Black" Margin="10, 10"></Label>
+            </StackLayout>
+            <Image Source="arrow.png" Margin="12, -48, 0, 0" HorizontalOptions="Start">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding BackCommand}"></TapGestureRecognizer>
+                </Image.GestureRecognizers>
+            </Image>
+            <ScrollView Margin="0, 7, 0, 0">
+                <StackLayout Orientation="Vertical">
+                    <StackLayout Orientation="Horizontal" Background="#D9D9D9" Margin="0, 2">
+                        <Image Source="{Binding SelectedUser.Image}" Margin="35, 9, 10, 9">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding UserCommand}"></TapGestureRecognizer>
+                            </Image.GestureRecognizers>
+                        </Image>
+                        <Label Text="{Binding SelectedUser.Username}" FontSize="22" FontAttributes="Bold" TextColor="Black" Margin="5, 9, 10, 9"></Label>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                        <Image Source="{Binding SelectedFilm.Poster}" Margin="20,10,15,12" HeightRequest="180">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding FilmCommand}"></TapGestureRecognizer>
+                            </Image.GestureRecognizers>
+                        </Image>
+                        <StackLayout>
+                            <Label Text="{Binding SelectedFilm.Name}" TextColor="Black"  FontSize="30" FontAttributes="Bold" HorizontalTextAlignment="Center" Margin="0,25,0,0"/>
+                            <Image Margin="0, 0, 0, 0" WidthRequest="220" HorizontalOptions="Center">
+                                <Image.Triggers>
+                                    <DataTrigger Binding="{Binding SelectedFilm.Mark}" Value="1" TargetType="Image">
+                                        <Setter Property="Source" Value="m1.png" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding SelectedFilm.Mark}" Value="2" TargetType="Image">
+                                        <Setter Property="Source" Value="m2.png" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding SelectedFilm.Mark}" Value="3" TargetType="Image">
+                                        <Setter Property="Source" Value="m3.png" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding SelectedFilm.Mark}" Value="4" TargetType="Image">
+                                        <Setter Property="Source" Value="m4.png" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding SelectedFilm.Mark}" Value="5" TargetType="Image">
+                                        <Setter Property="Source" Value="m5.png" />
+                                    </DataTrigger>
+                                </Image.Triggers>
+                            </Image>
+                        </StackLayout>
+                    </StackLayout>
+                    <StackLayout Background="#D9D9D9">
+                        <Editor Text="{Binding Letter.Text}" FontSize="20" AutoSize="TextChanges" IsReadOnly="True"></Editor>
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

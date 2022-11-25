@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="App1.Views.FilmPage"
+             Background="white">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout>
+                <Image Source="{Binding SelectedFilm.Poster}" HorizontalOptions="FillAndExpand"></Image>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Margin="0, -600, 0, 0">
+                    <Image Source="minicircle.png" Margin="10, 0"></Image>
+                </StackLayout>
+                <Image Source="arrow.png" Margin="12, -31, 0, 0" HorizontalOptions="Start">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding BackCommand}"></TapGestureRecognizer>
+                    </Image.GestureRecognizers>
+                </Image>
+                <StackLayout Orientation="Vertical" HorizontalOptions="End" Margin="0, 150, 10, 0">
+                    <Image Source="whitecircle.png" Margin="0, 5, 0, 0">
+                        <Image.Triggers>
+                            <DataTrigger Binding="{Binding IsLove}" Value="true" TargetType="Image">
+                                <Setter Property="Source" Value="blackcircle.png" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsLove}" Value="false" TargetType="Image">
+                                <Setter Property="Source" Value="whitecircle.png" />
+                            </DataTrigger>
+                        </Image.Triggers>
+                    </Image>
+                    <Image Source="heart.png" Margin="0, -40, 0, 0">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding LoveCommand}"></TapGestureRecognizer>
+                        </Image.GestureRecognizers>
+                        <Image.Triggers>
+                            <DataTrigger Binding="{Binding IsLove}" Value="true" TargetType="Image">
+                                <Setter Property="Source" Value="wheart.png" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsLove}" Value="false" TargetType="Image">
+                                <Setter Property="Source" Value="heart.png" />
+                            </DataTrigger>
+                        </Image.Triggers>
+                    </Image>
+                    <Image Source="whitecircle.png" Margin="0, 15, 0, 0">
+                        <Image.Triggers>
+                            <DataTrigger Binding="{Binding IsWant}" Value="true" TargetType="Image">
+                                <Setter Property="Source" Value="blackcircle.png" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsWant}" Value="false" TargetType="Image">
+                                <Setter Property="Source" Value="whitecircle.png" />
+                            </DataTrigger>
+                        </Image.Triggers>
+                    </Image>
+                    <Image Source="wantt.png" Margin="0, -42, 0, 0">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding WantCommand}"></TapGestureRecognizer>
+                        </Image.GestureRecognizers>
+                        <Image.Triggers>
+                            <DataTrigger Binding="{Binding IsWant}" Value="true" TargetType="Image">
+                                <Setter Property="Source" Value="wwantt.png" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsWant}" Value="false" TargetType="Image">
+                                <Setter Property="Source" Value="wantt.png" />
+                            </DataTrigger>
+                        </Image.Triggers>
+                    </Image>
+                    <Image Source="whitecircle.png" Margin="0, 15, 0, 0">
+                        <Image.Triggers>
+                            <DataTrigger Binding="{Binding IsLetter}" Value="true" TargetType="Image">
+                                <Setter Property="Source" Value="blackcircle.png" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsLetter}" Value="false" TargetType="Image">
+                                <Setter Property="Source" Value="whitecircle.png" />
+                            </DataTrigger>
+                        </Image.Triggers>
+                    </Image>
+                    <Image Source="pancil.png" Margin="0, -41, 0, 0">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding LetterCommand}"></TapGestureRecognizer>
+                        </Image.GestureRecognizers>
+                        <Image.Triggers>
+                            <DataTrigger Binding="{Binding IsLetter}" Value="true" TargetType="Image">
+                                <Setter Property="Source" Value="wpancil.png" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsLetter}" Value="false" TargetType="Image">
+                                <Setter Property="Source" Value="pancil.png" />
+                            </DataTrigger>
+                        </Image.Triggers>
+                    </Image>
+                </StackLayout>
+                <StackLayout Margin="0, 246, 0, 0">
+                    <Label Text="{Binding SelectedFilm.Name}" TextTransform="Uppercase" FontSize="38" TextColor="Black" FontAttributes="Bold" HorizontalOptions="Center" Margin="0, 0, 0, -15"></Label>
+                    <Label Text="{Binding SelectedFilm.Original}" FontSize="28" TextColor="Black" HorizontalOptions="Center" Margin="0, 3, 0, -7"></Label>
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                        <Image Source="star.png" Margin="0, 0, 0, 0" WidthRequest="60">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Star1Command}"></TapGestureRecognizer>
+                            </Image.GestureRecognizers>
+                            <Image.Triggers>
+                                <DataTrigger Binding="{Binding Star1}" Value="true" TargetType="Image">
+                                    <Setter Property="Source" Value="blackstar.png" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Star1}" Value="false" TargetType="Image">
+                                    <Setter Property="Source" Value="star.png" />
+                                </DataTrigger>
+                            </Image.Triggers>
+                        </Image>
+                        <Image Source="star.png" Margin="0, 0, 0, 0" WidthRequest="60">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Star2Command}"></TapGestureRecognizer>
+                            </Image.GestureRecognizers>
+                            <Image.Triggers>
+                                <DataTrigger Binding="{Binding Star2}" Value="true" TargetType="Image">
+                                    <Setter Property="Source" Value="blackstar.png" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Star2}" Value="false" TargetType="Image">
+                                    <Setter Property="Source" Value="star.png" />
+                                </DataTrigger>
+                            </Image.Triggers>
+                        </Image>
+                        <Image Source="star.png" Margin="0, 0, 0, 0" WidthRequest="60">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Star3Command}"></TapGestureRecognizer>
+                            </Image.GestureRecognizers>
+                            <Image.Triggers>
+                                <DataTrigger Binding="{Binding Star3}" Value="true" TargetType="Image">
+                                    <Setter Property="Source" Value="blackstar.png" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Star3}" Value="false" TargetType="Image">
+                                    <Setter Property="Source" Value="star.png" />
+                                </DataTrigger>
+                            </Image.Triggers>
+                        </Image>
+                        <Image Source="star.png" Margin="0, 0, 0, 0" WidthRequest="60">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Star4Command}"></TapGestureRecognizer>
+                            </Image.GestureRecognizers>
+                            <Image.Triggers>
+                                <DataTrigger Binding="{Binding Star4}" Value="true" TargetType="Image">
+                                    <Setter Property="Source" Value="blackstar.png" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Star4}" Value="false" TargetType="Image">
+                                    <Setter Property="Source" Value="star.png" />
+                                </DataTrigger>
+                            </Image.Triggers>
+                        </Image>
+                        <Image Source="star.png" Margin="0, 0, 0, 0" WidthRequest="60">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Star5Command}"></TapGestureRecognizer>
+                            </Image.GestureRecognizers>
+                            <Image.Triggers>
+                                <DataTrigger Binding="{Binding Star5}" Value="true" TargetType="Image">
+                                    <Setter Property="Source" Value="blackstar.png" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Star5}" Value="false" TargetType="Image">
+                                    <Setter Property="Source" Value="star.png" />
+                                </DataTrigger>
+                            </Image.Triggers>
+                        </Image>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0, -7">
+                        <Label Text="{Binding SelectedFilm.Year}" FontSize="28" TextColor="Black"></Label>
+                        <Label Text=", " FontSize="28" TextColor="Black" Margin="-3, 0, 0, 0"></Label>
+                        <Label Text="{Binding SelectedFilm.Genre}" FontSize="28" TextColor="Black"></Label>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0, -7">
+                        <Label Text="{Binding SelectedFilm.Country}" FontSize="28" TextColor="Black"></Label>
+                        <Label Text=", " FontSize="28" TextColor="Black" Margin="-3, 0, 0, 0"></Label>
+                        <Label Text="{Binding SelectedFilm.Age}" FontSize="28" TextColor="Black"></Label>
+                    </StackLayout>
+                    <Label Text="{Binding SelectedFilm.Timing}" FontSize="28" TextColor="Black" HorizontalOptions="Center" Margin="0, -7, 0, 0"></Label>
+                </StackLayout>
+                <Editor Text="{Binding SelectedFilm.Description}" FontSize="24" Margin="5, 5" HorizontalOptions="Center" IsReadOnly="True"></Editor>
+
+                <Button Text="Рецензии" Background="#D9D9D9" Margin="15, 0, 0, 0" FontSize="27" Command="{Binding ClickCommand}"  CornerRadius="40" HorizontalOptions="Start" WidthRequest="380"></Button>
+
+                <StackLayout Margin="0, 290, 0, -380">
+                    <ListView x:Name="marksList" Rotation="270" ItemsSource="{Binding Marks}" SelectionMode="None"  AnchorX="0"
+			            AnchorY="0" RowHeight="128">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <ViewCell.View>
+                                        <StackLayout Orientation="Vertical" x:Name="Item" HorizontalOptions="Center" Rotation="90">
+                                            <Image Source="{Binding Image}" HeightRequest="115" />
+                                            <StackLayout Margin="-57, -37, 0, 0">
+                                                <Image Source="whitecircle" Margin="0, 0, 0, 0" WidthRequest="40" HorizontalOptions="Center"/>
+                                                <Label Text="{Binding M}" TextColor="white" FontSize="30" FontAttributes="Bold" HorizontalTextAlignment="Center" Margin="-2,-47,0,0"/>
+                                            </StackLayout>
+                                        </StackLayout>
+                                    </ViewCell.View>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

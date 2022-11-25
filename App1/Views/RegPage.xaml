@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="App1.Views.RegPage"
+             xmlns:vm="clr-namespace:App1.ViewModels">
+
+    <ContentPage.BindingContext>
+        <vm:RegViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+        <StackLayout Padding="10,10,10,0" VerticalOptions="Center" Background="white">
+            <Image Source="lapki1.png" WidthRequest="250" Margin="150, 0, 0, 0"/>
+            <Label Text="Привет! Рады тебя видеть!" FontSize="30" TextColor="Black" HorizontalOptions="Center" FontAttributes="Bold"></Label>
+            <Entry Placeholder="Имя пользователя" Text="{Binding Username}"></Entry>
+            <Entry Placeholder="Электронная почта" Text="{Binding Email}"></Entry>
+            <Entry Placeholder="Пароль" Text="{Binding Password}" IsPassword="True"></Entry>
+            <Button Text="Создать аккаунт" TextColor="Black" TextTransform="None" FontSize="27" BackgroundColor="Gray" CornerRadius="40" Command="{Binding RegCommand}" Margin="0, 5" Background="#D9D9D9"></Button>
+            <Button Text="Войти" TextColor="Black" TextTransform="None" FontSize="27" CornerRadius="40" BackgroundColor="Gray" BorderWidth="2" BorderColor="Black" Command="{Binding LoginCommand}" Margin="0, 5" Background="white"></Button>
+            <Image Source="gato.png" WidthRequest="210" HorizontalOptions="Start" Margin="10, 0, 0, 0"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
