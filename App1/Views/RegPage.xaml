@@ -12,6 +12,7 @@
         <StackLayout Padding="10,10,10,0" VerticalOptions="Center" Background="white">
             <Image Source="lapki1.png" WidthRequest="250" Margin="150, 0, 0, 0"/>
             <Label Text="Привет! Рады тебя видеть!" FontSize="30" TextColor="Black" HorizontalOptions="Center" FontAttributes="Bold"></Label>
+            <Label Text="{Binding Warning}" FontSize="18" TextColor="Red" HorizontalOptions="Center"></Label>
             <Entry Placeholder="Имя пользователя" Text="{Binding Username}"></Entry>
             <Entry Placeholder="Электронная почта" Text="{Binding Email}"></Entry>
             <Entry Placeholder="Пароль" Text="{Binding Password}" IsPassword="True"></Entry>

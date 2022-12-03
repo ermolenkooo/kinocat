@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using SQLite;
 using App1.ModelsForDB;
+using SQLiteNetExtensions.Extensions;
 
 namespace App1.ModelsForDB
 {
@@ -21,57 +22,65 @@ namespace App1.ModelsForDB
             database.CreateTable<MarkDB>();
         }
 
-        public IEnumerable<UserDB> GetUsers()
+        public List<UserDB> GetUsers()
         {
-            return database.Table<UserDB>().ToList();
+            return database.GetAllWithChildren<UserDB>();
+            //return database.Table<UserDB>().ToList();
         }
         public UserDB GetUser(int id)
         {
-            return database.Get<UserDB>(id);
+            return database.GetWithChildren<UserDB>(id);
+            //return database.Get<UserDB>(id);
         }
         public int DeleteUser(int id)
         {
             return database.Delete<UserDB>(id);
         }
-        public int SaveUser(UserDB item)
+        public void SaveUser(UserDB item)
         {
             if (item.Id != 0)
             {
-                database.Update(item);
-                return item.Id;
+                database.UpdateWithChildren(item);
+                //database.Update(item);
+                //return item.Id;
             }
             else
             {
-                return database.Insert(item);
+                database.InsertWithChildren(item);
+                //return database.Insert(item);
             }
         }
 
-        public IEnumerable<FilmDB> GetFilms()
+        public List<FilmDB> GetFilms()
         {
-            return database.Table<FilmDB>().ToList();
+            return database.GetAllWithChildren<FilmDB>();
+            //return database.Table<FilmDB>().ToList();
         }
         public FilmDB GetFilm(int id)
         {
-            return database.Get<FilmDB>(id);
+            return database.GetWithChildren<FilmDB>(id);
+            //return database.Get<FilmDB>(id);
         }
         public int DeleteFilm(int id)
         {
             return database.Delete<FilmDB>(id);
         }
-        public int SaveFilm(FilmDB item)
+        public void SaveFilm(FilmDB item)
         {
             if (item.Id != 0)
             {
-                database.Update(item);
-                return item.Id;
+                //database.Update(item);
+                database.UpdateWithChildren(item);
+                //return item.Id;
             }
             else
             {
-                return database.Insert(item);
+                database.InsertWithChildren(item);
+                //database.Insert(item);
             }
         }
 
-        public IEnumerable<FollowerDB> GetFollowers()
+        public List<FollowerDB> GetFollowers()
         {
             return database.Table<FollowerDB>().ToList();
         }
@@ -96,7 +105,7 @@ namespace App1.ModelsForDB
             }
         }
 
-        public IEnumerable<LetterDB> GetLetters()
+        public List<LetterDB> GetLetters()
         {
             return database.Table<LetterDB>().ToList();
         }
@@ -121,7 +130,7 @@ namespace App1.ModelsForDB
             }
         }
 
-        public IEnumerable<LoveDB> GetLove()
+        public List<LoveDB> GetLove()
         {
             return database.Table<LoveDB>().ToList();
         }
@@ -146,7 +155,7 @@ namespace App1.ModelsForDB
             }
         }
 
-        public IEnumerable<WatchlistDB> GetWatchlist()
+        public List<WatchlistDB> GetWatchlist()
         {
             return database.Table<WatchlistDB>().ToList();
         }
@@ -171,7 +180,7 @@ namespace App1.ModelsForDB
             }
         }
 
-        public IEnumerable<MarkDB> GetMarks()
+        public List<MarkDB> GetMarks()
         {
             return database.Table<MarkDB>().ToList();
         }

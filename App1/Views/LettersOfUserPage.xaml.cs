@@ -18,11 +18,11 @@ namespace App1.Views
             InitializeComponent();
         }
 
-        public LettersOfUserPage(User u)
+        public LettersOfUserPage(User u, User selectedUser, bool isSerial)
         {
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
-            this.BindingContext = new LettersOfUserViewModel(u) { Navigation = this.Navigation };
+            this.BindingContext = new LettersOfUserViewModel(u, selectedUser, isSerial) { Navigation = this.Navigation };
         }
     }
 }

@@ -18,11 +18,11 @@ namespace App1.Views
             InitializeComponent();
         }
 
-        public MarksPage(User u)
+        public MarksPage(User u, User selectedUser, bool isSerial)
         {
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
-            this.BindingContext = new MarksViewModel(u) { Navigation = this.Navigation };
+            this.BindingContext = new MarksViewModel(u, selectedUser, isSerial) { Navigation = this.Navigation };
         }
     }
 }

@@ -18,11 +18,11 @@ namespace App1.Views
             InitializeComponent();
         }
 
-        public LetterPage(Letter l)
+        public LetterPage(Letter l, User u)
         {
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
-            this.BindingContext = new LetterViewModel(l) { Navigation = this.Navigation };
+            this.BindingContext = new LetterViewModel(l, u) { Navigation = this.Navigation };
         }
     }
 }

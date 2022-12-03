@@ -102,7 +102,7 @@ namespace App1.ViewModels
                     LetterList let = new LetterList();
                     let.GetLetters();
                     Letter l = let.Letters.Find(x => x.Id_film == value.Id_film && x.Id_user == value.Id_user);
-                    Navigation.PushAsync(new LetterPage(l));
+                    Navigation.PushAsync(new LetterPage(l, SelectedUser));
                 }
             }
         }

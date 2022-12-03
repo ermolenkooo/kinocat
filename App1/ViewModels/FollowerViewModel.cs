@@ -67,22 +67,22 @@ namespace App1.ViewModels
 
         private void OnMarksClicked(object obj)
         {
-            Navigation.PushAsync(new MarksPage(selectedUser));
+            //Navigation.PushAsync(new MarksPage(selectedUser));
         }
 
         private void OnWatchlistClicked(object obj)
         {
-            Navigation.PushAsync(new WatchlistPage(selectedUser));
+            //Navigation.PushAsync(new WatchlistPage(selectedUser));
         }
 
         private void OnLoveClicked(object obj)
         {
-            Navigation.PushAsync(new LovePage(selectedUser));
+            //Navigation.PushAsync(new LovePage(selectedUser));
         }
 
         private void OnLettersClicked(object obj)
         {
-            Navigation.PushAsync(new LettersOfUserPage(selectedUser));
+            //Navigation.PushAsync(new LettersOfUserPage(selectedUser));
         }
 
         private void OnBackClicked(object obj) //стрелка назад

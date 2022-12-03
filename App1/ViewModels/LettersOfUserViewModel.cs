@@ -11,7 +11,6 @@ namespace App1.ViewModels
     class LettersOfUserViewModel : BaseViewModel
     {
         public Command BackCommand { get; }
-        public Command ClickCommand { get; }
 
         private Film selectedFilm;
         private User selectedUser;
@@ -19,25 +18,41 @@ namespace App1.ViewModels
 
         public INavigation Navigation { get; set; }
 
-        public LettersOfUserViewModel(User u)
+        public LettersOfUserViewModel(User u, User selUser, bool isSerial)
         {
             selectedUser = u;
             selectedFilm = new Film();
             films = new ObservableCollection<Film>();
             BackCommand = new Command(OnBackClicked);
-            ClickCommand = new Command(OnButtonClicked);
 
-            FilmList allFilms = new FilmList();
-            allFilms.GetFilms();
-            MarkOfUserList marks = new MarkOfUserList();
-            marks.GetMarks();
-            LetterList letters = new LetterList();
-            letters.GetLetters();
-            foreach (var l in letters.Letters)
-                if (l.Id_user == selectedUser.Id) 
-                    films.Add(allFilms.Films.Find(x => x.Id == l.Id_film));
-            foreach(var f in films)
-                f.Mark = marks.Marks.Find(x => x.Id_user == selectedUser.Id && x.Id_film == f.Id).Mark;
+            var allFilms = App.Database.GetFilms();
+            var marks = App.Database.GetMarks();
+            var letters = App.Database.GetLetters();
+            if (!isSerial)
+            {
+                foreach (var l in letters)
+                    if (l.Id_user == selUser.Id)
+                    {
+                        foreach (var f in allFilms)
+                            if (f.Id == l.Id_film && f.Seasons == null)
+                            {
+                                films.Add(new Film { Id = f.Id, Age = f.Age, Country = f.Country, Description = f.Description, Genre = f.Genre, Name = f.Name, Original = f.Original, Poster = f.Poster, Seasons = f.Seasons, Timing = f.Timing, Year = f.Year });
+                                break;
+                            }
+                    }
+            }
+            else
+            {
+                foreach (var l in letters)
+                    if (l.Id_user == selUser.Id)
+                    {
+                        foreach (var f in allFilms)
+                            if (f.Id == l.Id_film && f.Seasons != null)
+                                films.Add(new Film { Id = f.Id, Age = f.Age, Country = f.Country, Description = f.Description, Genre = f.Genre, Name = f.Name, Original = f.Original, Poster = f.Poster, Seasons = f.Seasons, Timing = f.Timing, Year = f.Year });
+                    }
+            }
+            foreach (var f in films)
+                f.Mark = marks.Find(x => x.Id_user == selUser.Id && x.Id_film == f.Id).Mark;
         }
 
         public ObservableCollection<Film> Films
@@ -63,7 +78,6 @@ namespace App1.ViewModels
                     User tempUser = value;
                     selectedUser = null;
                     OnPropertyChanged("SelectedUser");
-                    Navigation.PushAsync(new FollowerPage(tempUser));
                 }
             }
         }
@@ -90,19 +104,14 @@ namespace App1.ViewModels
 
         public void ToLetter(Film f)
         {
-            LetterList letters = new LetterList();
-            letters.GetLetters();
-            foreach (var l in letters.Letters)
+            var letters = App.Database.GetLetters();
+            foreach (var l in letters)
                 if (l.Id_film == f.Id && l.Id_user == selectedUser.Id)
                 {
-                    Navigation.PushAsync(new LetterPage(l));
+                    Letter letter = new Letter { Id = l.Id, Id_film = l.Id_film, Id_user = l.Id_user, Text = l.Text };
+                    Navigation.PushAsync(new LetterPage(letter, SelectedUser));
                     break;
                 }
-        }
-
-        private void OnButtonClicked(object obj) //переходим к рецензии
-        {
-
         }
     }
 }

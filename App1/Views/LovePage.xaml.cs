@@ -18,11 +18,11 @@ namespace App1.Views
             InitializeComponent();
         }
 
-        public LovePage(User u)
+        public LovePage(User u, User selectedUser, bool isSerial)
         {
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
-            this.BindingContext = new LoveViewModel(u) { Navigation = this.Navigation };
+            this.BindingContext = new LoveViewModel(u, selectedUser, isSerial) { Navigation = this.Navigation };
         }
     }
 }

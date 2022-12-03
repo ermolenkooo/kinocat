@@ -11,7 +11,6 @@ namespace App1.ViewModels
     class WatchlistViewModel : BaseViewModel
     {
         public Command BackCommand { get; }
-        public Command ClickCommand { get; }
 
         private Film selectedFilm;
         private User selectedUser;
@@ -20,23 +19,49 @@ namespace App1.ViewModels
 
         public INavigation Navigation { get; set; }
 
-        public WatchlistViewModel(User u)
+        public WatchlistViewModel(User u, User selUser, bool isSerial)
         {
             selectedUser = u;
             selectedFilm = new Film();
             films1 = new ObservableCollection<Film>();
             films2 = new ObservableCollection<Film>();
             BackCommand = new Command(OnBackClicked);
-            ClickCommand = new Command(OnButtonClicked);
 
             List<Film> films = new List<Film>();
-            FilmList allFilms = new FilmList();
+            /*FilmList allFilms = new FilmList();
             allFilms.GetFilms();
             WatchList list = new WatchList();
             list.GetWatches();
             foreach (var m in list.Watches)
                 if (m.Id_user == selectedUser.Id)
-                    films.Add(allFilms.Films.Find(x => x.Id == m.Id_film));
+                    films.Add(allFilms.Films.Find(x => x.Id == m.Id_film));*/
+
+            var allFilms = App.Database.GetFilms();
+            var list = App.Database.GetWatchlist();
+            if (!isSerial)
+            {
+                foreach (var l in list)
+                    if (l.Id_user == selUser.Id)
+                    {
+                        foreach (var f in allFilms)
+                            if (f.Id == l.Id_film && f.Seasons == null)
+                            {
+                                films.Add(new Film { Id = f.Id, Age = f.Age, Country = f.Country, Description = f.Description, Genre = f.Genre, Name = f.Name, Original = f.Original, Poster = f.Poster, Seasons = f.Seasons, Timing = f.Timing, Year = f.Year });
+                                break;
+                            }
+                    }
+            }
+            else
+            {
+                foreach (var l in list)
+                    if (l.Id_user == selUser.Id)
+                    {
+                        foreach (var f in allFilms)
+                            if (f.Id == l.Id_film && f.Seasons != null)
+                                films.Add(new Film { Id = f.Id, Age = f.Age, Country = f.Country, Description = f.Description, Genre = f.Genre, Name = f.Name, Original = f.Original, Poster = f.Poster, Seasons = f.Seasons, Timing = f.Timing, Year = f.Year });
+                    }
+            }
+
             for (int i = 0; i < films.Count; i++)
                 if (i % 2 == 0)
                     films1.Add(films[i]);
@@ -95,7 +120,6 @@ namespace App1.ViewModels
                     Film tempf = value;
                     selectedFilm = null;
                     OnPropertyChanged("SelectedFilm");
-                    Navigation.PushAsync(new FilmPage(value, SelectedUser));
                 }
             }
         }
@@ -103,11 +127,6 @@ namespace App1.ViewModels
         private void OnBackClicked(object obj) //стрелка назад
         {
             Navigation.PopAsync();
-        }
-
-        private void OnButtonClicked(object obj) //переходим к фильму
-        {
-
         }
     }
 }

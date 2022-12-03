@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using SQLite;
+using SQLiteNetExtensions.Attributes;
 
 namespace App1.ModelsForDB
 {
@@ -22,5 +23,13 @@ namespace App1.ModelsForDB
         public string Timing { get; set; }
         public string Original { get; set; }
         public string Seasons { get; set; }
+        [OneToMany]
+        public List<LoveDB> Love { get; set; }
+        [OneToMany]
+        public List<MarkDB> Marks { get; set; }
+        [OneToMany]
+        public List<WatchlistDB> Watchlist { get; set; }
+        [OneToMany]
+        public List<LetterDB> Letters { get; set; }
     }
 }

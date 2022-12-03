@@ -18,11 +18,11 @@ namespace App1.Views
             InitializeComponent();
         }
 
-        public WatchlistPage(User u)
+        public WatchlistPage(User u, User selectedUser, bool isSerial)
         {
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
-            this.BindingContext = new WatchlistViewModel(u) { Navigation = this.Navigation };
+            this.BindingContext = new WatchlistViewModel(u, selectedUser, isSerial) { Navigation = this.Navigation };
         }
     }
 }

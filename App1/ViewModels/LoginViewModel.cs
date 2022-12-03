@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Xamarin.Forms;
+using App1.Models;
 
 namespace App1.ViewModels
 {
@@ -63,8 +64,17 @@ namespace App1.ViewModels
 
         private void OnLoginClicked(object obj)
         {
-
-            Navigation.PushAsync(new ProfilPage());
+            var u = App.Database.GetUsers();
+            foreach(var user in u)
+            {
+                if (user.Email == Email && user.Password == Password) 
+                {
+                    User myuser = new User { Email = user.Email, Image = user.Image, Username = user.Username, Id = user.Id }; 
+                    Navigation.PushAsync(new ProfilPage(myuser));
+                    return;
+                }
+            }
+            Warning = "Неверный логин и/или пароль!";
         }
 
         private void OnRegClicked(object obj)

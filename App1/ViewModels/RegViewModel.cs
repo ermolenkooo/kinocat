@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Text;
 using Xamarin.Forms;
 using Xamarin.Essentials;
+using App1.ModelsForDB;
+using App1.Models;
 
 namespace App1.ViewModels
 {
@@ -17,6 +19,7 @@ namespace App1.ViewModels
         private string email;
         private string password;
         private string file;
+        private string warning;
 
         public INavigation Navigation { get; set; }
 
@@ -79,6 +82,19 @@ namespace App1.ViewModels
             }
         }
 
+        public string Warning
+        {
+            get { return warning; }
+            set
+            {
+                if (warning != value)
+                {
+                    warning = value;
+                    OnPropertyChanged("Warning");
+                }
+            }
+        }
+
         private void OnLoginClicked(object obj)
         {
             Navigation.PushAsync(new LoginPage());
@@ -86,10 +102,40 @@ namespace App1.ViewModels
 
         private void OnRegClicked(object obj)
         {
-            Navigation.PushAsync(new ProfilPage());
+            var users = App.Database.GetUsers();
+            foreach(var u in users)
+            {
+                if (Email == null || Username == null || Password == null)
+                {
+                    Warning = "Заполните все поля!";
+                    return;
+                }
+                else if (Email == u.Email)
+                {
+                    Warning = "На данный e-mail уже зарегистрирован аккаунт!";
+                    return;
+                }
+                else if (Username == u.Username) 
+                {
+                    Warning = "Данное имя пользователя уже используется!";
+                    return;
+                }
+            }
+            UserDB userdb = new UserDB { Email = Email, Password = Password, Username = Username, Image = File };
+            App.Database.SaveUser(userdb);
+            users = App.Database.GetUsers(); 
+            foreach (var u in users)
+            {
+                if (u.Username == Username)
+                {
+                    User user = new User { Email = Email, Password = Password, Username = Username, Image = File, Id = u.Id };
+                    Navigation.PushAsync(new ProfilPage(user));
+                    break;
+                }
+            }
         }
 
-        private async void OnFileClicked(object obj)
+        private async void OnFileClicked(object obj) ////////////////////////////////
         {
             var result = await MediaPicker.PickPhotoAsync(new MediaPickerOptions
             {

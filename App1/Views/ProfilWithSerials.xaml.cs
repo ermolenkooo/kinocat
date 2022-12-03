@@ -6,17 +6,18 @@ using System.Threading.Tasks;
 using App1.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using App1.Models;
 
 namespace App1.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ProfilWithSerials : ContentPage
     {
-        public ProfilWithSerials()
+        public ProfilWithSerials(User u)
         {
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
-            this.BindingContext = new ProfilWithSerialsViewModel() { Navigation = this.Navigation };
+            this.BindingContext = new ProfilWithSerialsViewModel(u) { Navigation = this.Navigation };
         }
     }
 }

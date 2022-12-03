@@ -20,10 +20,10 @@ namespace App1.ViewModels
 
         public INavigation Navigation { get; set; }
 
-        public LetterViewModel(Letter l)
+        public LetterViewModel(Letter l, User u)
         {
             letter = l;
-            selectedUser = new User();
+            selectedUser = u;
             selectedFilm = new Film();
             BackCommand = new Command(OnBackClicked);
             UserCommand = new Command(UserClicked);

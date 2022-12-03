@@ -6,8 +6,8 @@
     <ContentPage.Content>
         <StackLayout Padding="0,0,0,0" VerticalOptions="Start" Background="white">
             <Image Source="shapka.png" Margin="0, 0, 0, 0"/>
-            <Image Source="binosh.png" HorizontalOptions="Start" Margin="40, -60, 0, 0"/>
-            <Label Text="хэми" FontSize="22" TextColor="Black" HorizontalOptions="Start" Margin="45, 0" FontAttributes="Bold"></Label>
+            <Image Source="{Binding User.Image}" HorizontalOptions="Start" Margin="40, -60, 0, 0"/>
+            <Label Text="{Binding User.Username}" FontSize="22" TextColor="Black" HorizontalOptions="Start" Margin="45, 0" FontAttributes="Bold"></Label>
             <Image Source="minicircle.png" Margin="0, -180, 15, 0" HorizontalOptions="End"></Image>
             <Image Source="search.png" Margin="0, -26, 22, 0" HorizontalOptions="End" WidthRequest="12">
                 <Image.GestureRecognizers>
@@ -21,7 +21,7 @@
                         <TapGestureRecognizer Command="{Binding FollowingCommand}"/>
                     </StackLayout.GestureRecognizers>
 
-                    <Label Text="44" FontSize="22" TextColor="Black" FontAttributes="Bold"></Label>
+                    <Label Text="{Binding User.CountOfFollowing}" FontSize="22" TextColor="Black" FontAttributes="Bold"></Label>
                     <Label Text="подписки" FontSize="22" TextColor="Black"></Label>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" Margin="20, 0, 0, 0">
@@ -30,7 +30,7 @@
                         <TapGestureRecognizer Command="{Binding FollowersCommand}"/>
                     </StackLayout.GestureRecognizers>
 
-                    <Label Text="44" FontSize="22" TextColor="Black" FontAttributes="Bold"></Label>
+                    <Label Text="{Binding User.CountOfFollowers}" FontSize="22" TextColor="Black" FontAttributes="Bold"></Label>
                     <Label Text="подписчики" FontSize="22" TextColor="Black"></Label>
                 </StackLayout>
             </StackLayout>
