@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Xamarin.Forms;
+using Xamarin.Essentials;
 
 namespace App1.ViewModels
 {
@@ -10,10 +11,12 @@ namespace App1.ViewModels
     {
         public Command LoginCommand { get; }
         public Command RegCommand { get; }
+        public Command FileCommand { get; }
 
         private string username;
         private string email;
         private string password;
+        private string file;
 
         public INavigation Navigation { get; set; }
 
@@ -21,6 +24,7 @@ namespace App1.ViewModels
         {
             LoginCommand = new Command(OnLoginClicked);
             RegCommand = new Command(OnRegClicked);
+            FileCommand = new Command(OnFileClicked);
         }
 
         public string Username
@@ -62,6 +66,19 @@ namespace App1.ViewModels
             }
         }
 
+        public string File
+        {
+            get { return file; }
+            set
+            {
+                if (file != value)
+                {
+                    file = value;
+                    OnPropertyChanged("File");
+                }
+            }
+        }
+
         private void OnLoginClicked(object obj)
         {
             Navigation.PushAsync(new LoginPage());
@@ -70,6 +87,16 @@ namespace App1.ViewModels
         private void OnRegClicked(object obj)
         {
             Navigation.PushAsync(new ProfilPage());
+        }
+
+        private async void OnFileClicked(object obj)
+        {
+            var result = await MediaPicker.PickPhotoAsync(new MediaPickerOptions
+            {
+                Title = "Выберите фото профиля!"
+            });
+
+            File = result.FileName;
         }
     }
 }
