@@ -20,6 +20,7 @@ namespace App1.ModelsForDB
             database.CreateTable<WatchlistDB>();
             database.CreateTable<MarkDB>();
         }
+
         public IEnumerable<UserDB> GetUsers()
         {
             return database.Table<UserDB>().ToList();

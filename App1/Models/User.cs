@@ -14,6 +14,8 @@ namespace App1.Models
         public int id;
         public string username;
         public string image;
+        public string email;
+        public string password;
         public bool readMe;
         public int countOfFollowers;
         public int countOfFollowing;
@@ -45,6 +47,26 @@ namespace App1.Models
             {
                 image = value;
                 OnPropertyChanged("Image");
+            }
+        }
+
+        public string Email
+        {
+            get { return email; }
+            set
+            {
+                email = value;
+                OnPropertyChanged("Email");
+            }
+        }
+
+        public string Password
+        {
+            get { return password; }
+            set
+            {
+                password = value;
+                OnPropertyChanged("Password");
             }
         }
 

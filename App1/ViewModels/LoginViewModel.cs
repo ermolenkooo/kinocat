@@ -13,6 +13,7 @@ namespace App1.ViewModels
 
         private string email;
         private string password;
+        private string warning;
 
         public INavigation Navigation { get; set; }
 
@@ -47,8 +48,22 @@ namespace App1.ViewModels
             }
         }
 
+        public string Warning
+        {
+            get { return warning; }
+            set
+            {
+                if (warning != value)
+                {
+                    warning = value;
+                    OnPropertyChanged("Warning");
+                }
+            }
+        }
+
         private void OnLoginClicked(object obj)
         {
+
             Navigation.PushAsync(new ProfilPage());
         }
 

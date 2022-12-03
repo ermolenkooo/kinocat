@@ -5,7 +5,7 @@ using SQLite;
 
 namespace App1.ModelsForDB
 {
-    [Table("Users")]
+    [Table("Films")]
     public class FilmDB
     {
         [PrimaryKey, AutoIncrement, Column("_id")]
@@ -22,9 +22,5 @@ namespace App1.ModelsForDB
         public string Timing { get; set; }
         public string Original { get; set; }
         public string Seasons { get; set; }
-        //public List<LetterDB> Letters { get; set; }
-        //public List<LoveDB> Love { get; set; }
-        //public List<WatchlistDB> Watchlist { get; set; }
-        //public List<MarkDB> Marks { get; set; }
     }
 }

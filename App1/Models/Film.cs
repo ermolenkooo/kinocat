@@ -22,6 +22,7 @@ namespace App1.Models
         string age;
         string timing;
         string original;
+        string seasons;
 
         public int Id
         {
@@ -50,6 +51,16 @@ namespace App1.Models
             {
                 poster = value;
                 OnPropertyChanged("Poster");
+            }
+        }
+
+        public string Seasons
+        {
+            get { return seasons; }
+            set
+            {
+                seasons = value;
+                OnPropertyChanged("Seasons");
             }
         }
 
