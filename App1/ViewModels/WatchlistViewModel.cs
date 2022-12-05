@@ -28,13 +28,6 @@ namespace App1.ViewModels
             BackCommand = new Command(OnBackClicked);
 
             List<Film> films = new List<Film>();
-            /*FilmList allFilms = new FilmList();
-            allFilms.GetFilms();
-            WatchList list = new WatchList();
-            list.GetWatches();
-            foreach (var m in list.Watches)
-                if (m.Id_user == selectedUser.Id)
-                    films.Add(allFilms.Films.Find(x => x.Id == m.Id_film));*/
 
             var allFilms = App.Database.GetFilms();
             var list = App.Database.GetWatchlist();
@@ -105,7 +98,6 @@ namespace App1.ViewModels
                     User tempUser = value;
                     selectedUser = null;
                     OnPropertyChanged("SelectedUser");
-                    Navigation.PushAsync(new FollowerPage(tempUser));
                 }
             }
         }
@@ -120,6 +112,10 @@ namespace App1.ViewModels
                     Film tempf = value;
                     selectedFilm = null;
                     OnPropertyChanged("SelectedFilm");
+                    if (tempf.Seasons == null)
+                        Navigation.PushAsync(new FilmPage(tempf, SelectedUser));
+                    else
+                        Navigation.PushAsync(new SerialPage(tempf, SelectedUser));
                 }
             }
         }

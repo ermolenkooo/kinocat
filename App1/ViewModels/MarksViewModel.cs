@@ -90,7 +90,10 @@ namespace App1.ViewModels
                     Film tempFilm = value;
                     selectedFilm = null;
                     OnPropertyChanged("SelectedFilm");
-                    Navigation.PushAsync(new FilmPage(tempFilm, SelectedUser));
+                    if (tempFilm.Seasons == null)
+                        Navigation.PushAsync(new FilmPage(tempFilm, SelectedUser));
+                    else
+                        Navigation.PushAsync(new SerialPage(tempFilm, SelectedUser));
                 }
             }
         }

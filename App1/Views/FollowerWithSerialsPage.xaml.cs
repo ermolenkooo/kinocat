@@ -3,26 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using App1.Models;
 using App1.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using App1.Models;
 
 namespace App1.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class FollowerPage : ContentPage
+    public partial class FollowerWithSerialsPage : ContentPage
     {
-        public FollowerPage()
+        public FollowerWithSerialsPage()
         {
             InitializeComponent();
         }
 
-        public FollowerPage(User u, User myuser)
+        public FollowerWithSerialsPage(User u, User myuser)
         {
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
-            this.BindingContext = new FollowerViewModel(u, myuser) { Navigation = this.Navigation };
+            this.BindingContext = new FollowerWithSerialsViewModel(u, myuser) { Navigation = this.Navigation };
         }
     }
 }
+
+

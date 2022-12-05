@@ -14,20 +14,30 @@ namespace App1.ViewModels
         public Command ClickCommand { get; }
 
         private User selectedUser;
-        private UserList userList = new UserList();
         private ObservableCollection<User> followers;
+
+        public User User { get; set; }
 
         public INavigation Navigation { get; set; }
 
-        public FollowersViewModel()
+        public FollowersViewModel(User u, User selu)
         {
+            selectedUser = selu;
+            User = u;
             BackCommand = new Command(OnBackClicked);
             ClickCommand = new Command(OnButtonClicked);
             followers = new ObservableCollection<User>();
-            userList.GetFollowers();
-            foreach (User u in userList.Users)
+
+            var follow = App.Database.GetFollowers().FindAll(x => x.Id_following == selu.Id);
+
+            foreach (var f in follow)
             {
-                Followers.Add(new User() { Id = u.Id, Username = u.Username, Image = u.Image, ReadMe = u.ReadMe, CountOfFollowing = u.CountOfFollowing, CountOfFollowers = u.CountOfFollowers });
+                var user = App.Database.GetUser(f.Id_follower);
+                var k = App.Database.GetFollowers().Find(x => x.Id_follower == User.Id && x.Id_following == user.Id);
+                if (k != null)
+                    followers.Add(new User { Id = user.Id, Image = user.Image, Username = user.Username, ReadMe = true });
+                else
+                    followers.Add(new User { Id = user.Id, Image = user.Image, Username = user.Username, ReadMe = false });
             }
         }
 
@@ -41,7 +51,10 @@ namespace App1.ViewModels
                     User tempUser = value;
                     selectedUser = null;
                     OnPropertyChanged("SelectedUser");
-                    Navigation.PushAsync(new FollowerPage(tempUser));
+                    if (tempUser.Id != User.Id)
+                        Navigation.PushAsync(new FollowerPage(tempUser, User));
+                    else
+                        Navigation.PushAsync(new ProfilPage(User));
                 }
             }
         }
@@ -65,19 +78,25 @@ namespace App1.ViewModels
 
         private void OnButtonClicked(object obj) //клик на кнопку отписаться/подписаться - что-то меняем в бд
         {
-            User f = new User();
-            foreach (User u in followers)
+            var f = App.Database.GetFollowers().Find(x => x.Id_follower == User.Id && x.Id_following == (int)obj);
+            if (f != null)
             {
-                if (u.Id == (int)obj)
+                App.Database.DeleteFollower(f.Id);
+                foreach (var follow in followers)
                 {
-                    f = u;
-                    break;
+                    if (follow.Id == (int)obj)
+                        follow.ReadMe = false;
                 }
             }
-            var ind = followers.IndexOf(f);
-            if (followers[ind].ReadMe == true)
-                followers[ind].ReadMe = false;
-            else followers[ind].ReadMe = true;
+            else
+            {
+                App.Database.SaveFollower(new ModelsForDB.FollowerDB { Id_follower = User.Id, Id_following = (int)obj });
+                foreach (var follow in followers)
+                {
+                    if (follow.Id == (int)obj)
+                        follow.ReadMe = true;
+                }
+            }
         }
     }
 }

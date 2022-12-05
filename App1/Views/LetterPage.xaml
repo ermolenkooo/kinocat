@@ -16,8 +16,8 @@
             </Image>
             <ScrollView Margin="0, 7, 0, 0">
                 <StackLayout Orientation="Vertical">
-                    <StackLayout Orientation="Horizontal" Background="#D9D9D9" Margin="0, 2">
-                        <Image Source="{Binding SelectedUser.Image}" Margin="35, 9, 10, 9">
+                    <StackLayout Orientation="Horizontal" Background="#D9D9D9" Margin="0, 2" HorizontalOptions="FillAndExpand">
+                        <Image Source="{Binding SelectedUser.Image}" Margin="35, 9, 10, 9" WidthRequest="90">
                             <Image.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding UserCommand}"></TapGestureRecognizer>
                             </Image.GestureRecognizers>

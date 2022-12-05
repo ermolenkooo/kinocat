@@ -15,6 +15,7 @@ namespace App1.ViewModels
 
         private Film selectedFilm;
         private User selectedUser;
+        private string text;
 
         public INavigation Navigation { get; set; }
 
@@ -24,8 +25,6 @@ namespace App1.ViewModels
             selectedFilm = f;
             BackCommand = new Command(OnBackClicked);
             CreateCommand = new Command(OnButtonClicked);
-
-            
         }
 
         public User SelectedUser
@@ -54,6 +53,19 @@ namespace App1.ViewModels
             }
         }
 
+        public string Text
+        {
+            get { return text; }
+            set
+            {
+                if (text != value)
+                {
+                    text = value;
+                    OnPropertyChanged("Text");
+                }
+            }
+        }
+
         private void OnBackClicked(object obj) //стрелка назад
         {
             Navigation.PopAsync();
@@ -61,7 +73,8 @@ namespace App1.ViewModels
 
         private void OnButtonClicked(object obj) //публикуем рецензию
         {
-
+            App.Database.SaveLetter(new ModelsForDB.LetterDB { Id_film = selectedFilm.Id, Id_user = selectedUser.Id, Text = Text });
+            Navigation.PushAsync(new FilmPage(selectedFilm, SelectedUser));
         }
     }
 }

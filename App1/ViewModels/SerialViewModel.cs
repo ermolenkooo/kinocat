@@ -9,7 +9,7 @@ using App1.ModelsForDB;
 
 namespace App1.ViewModels
 {
-    class FilmViewModel : BaseViewModel
+    class SerialViewModel : BaseViewModel
     {
         public Command BackCommand { get; }
         public Command ClickCommand { get; }
@@ -36,7 +36,7 @@ namespace App1.ViewModels
 
         public INavigation Navigation { get; set; }
 
-        public FilmViewModel(Film f, User u)
+        public SerialViewModel(Film f, User u)
         {
             marks = new ObservableCollection<Mark>();
             selectedUser = u;
@@ -61,7 +61,7 @@ namespace App1.ViewModels
                 selectedFilm.Mark = n.Mark;
 
             List<UserDB> users = new List<UserDB>();
-            foreach (var follow in followers) 
+            foreach (var follow in followers)
                 users.Add(App.Database.GetUser(follow.Id_following));
 
             var mymarks = marksf.FindAll(x => x.Id_film == selectedFilm.Id);
@@ -92,7 +92,7 @@ namespace App1.ViewModels
             else
                 IsLetter = false;
 
-            if (selectedFilm.Mark == 0) 
+            if (selectedFilm.Mark == 0)
             {
                 star1 = false;
                 star2 = false;
@@ -165,7 +165,6 @@ namespace App1.ViewModels
                     User tempUser = value;
                     selectedUser = null;
                     OnPropertyChanged("SelectedUser");
-                    //Navigation.PushAsync(new FollowerPage(tempUser));
                 }
             }
         }
@@ -292,7 +291,7 @@ namespace App1.ViewModels
             Navigation.PopAsync();
         }
 
-        private void OnLoveClicked(object obj) 
+        private void OnLoveClicked(object obj)
         {
             if (IsLove == true)
             {
@@ -339,7 +338,7 @@ namespace App1.ViewModels
             Star5 = false;
 
             var m = App.Database.GetMarks().Find(x => x.Id_user == selectedUser.Id && x.Id_film == selectedFilm.Id);
-            if (m != null) 
+            if (m != null)
                 App.Database.DeleteMark(m.Id);
             IsWant = false;
             App.Database.SaveMark(new MarkDB { Id_film = selectedFilm.Id, Id_user = selectedUser.Id, Mark = 1 });

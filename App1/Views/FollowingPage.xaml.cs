@@ -6,17 +6,18 @@ using System.Threading.Tasks;
 using App1.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using App1.Models;
 
 namespace App1.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class FollowingPage : ContentPage
     {
-        public FollowingPage()
+        public FollowingPage(User u, User selu)
         {
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
-            this.BindingContext = new FollowingViewModel() { Navigation = this.Navigation };
+            this.BindingContext = new FollowingViewModel(u, selu) { Navigation = this.Navigation };
         }
     }
 }

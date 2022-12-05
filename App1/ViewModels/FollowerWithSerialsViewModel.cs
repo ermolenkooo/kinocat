@@ -8,25 +8,39 @@ using App1.ModelsForDB;
 
 namespace App1.ViewModels
 {
-    class FollowerViewModel : BaseViewModel
+    class FollowerWithSerialsViewModel : BaseViewModel
     {
         public Command FollowingCommand { get; }
         public Command FollowersCommand { get; }
-        public Command SerialsCommand { get; }
+        public Command FilmsCommand { get; }
         public Command MarksCommand { get; }
         public Command WatchlistCommand { get; }
         public Command LoveCommand { get; }
         public Command LettersCommand { get; }
+        public Command SearchCommand { get; }
         public Command BackCommand { get; }
         public Command ClickCommand { get; }
 
         private User selectedUser;
 
-        public User User { get; set; }
-
         public INavigation Navigation { get; set; }
 
-        public FollowerViewModel(User u, User myuser)
+        User user;
+
+        public User User
+        {
+            get { return user; }
+            set
+            {
+                if (user != value)
+                {
+                    user = value;
+                    OnPropertyChanged("User");
+                }
+            }
+        }
+
+        public FollowerWithSerialsViewModel(User u, User myuser)
         {
             selectedUser = u;
             User = myuser;
@@ -34,27 +48,11 @@ namespace App1.ViewModels
             ClickCommand = new Command(OnButtonClicked);
             FollowingCommand = new Command(OnFollowingClicked);
             FollowersCommand = new Command(OnFollowersClicked);
-            SerialsCommand = new Command(OnSerialsClicked);
+            FilmsCommand = new Command(OnFilmsClicked);
             MarksCommand = new Command(OnMarksClicked);
             WatchlistCommand = new Command(OnWatchlistClicked);
             LoveCommand = new Command(OnLoveClicked);
             LettersCommand = new Command(OnLettersClicked);
-
-            List<FollowerDB> followers = new List<FollowerDB>();
-            List<FollowerDB> following = new List<FollowerDB>();
-            var follow = App.Database.GetFollowers();
-            foreach (var f in follow)
-            {
-                if (f.Id_following == u.Id)
-                    followers.Add(f);
-            }
-            foreach (var f in follow)
-            {
-                if (f.Id_follower == u.Id)
-                    following.Add(f);
-            }
-            selectedUser.countOfFollowers = followers.Count;
-            selectedUser.countOfFollowing = following.Count;
         }
 
         public User SelectedUser
@@ -70,44 +68,44 @@ namespace App1.ViewModels
             }
         }
 
+        private void OnBackClicked(object obj) //стрелка назад
+        {
+            Navigation.PopAsync();
+        }
+
         private void OnFollowingClicked(object obj)
         {
-            Navigation.PushAsync(new FollowingPage(User, selectedUser));
+            Navigation.PushAsync(new FollowingPage(User, SelectedUser));
         }
 
         private void OnFollowersClicked(object obj)
         {
-            Navigation.PushAsync(new FollowersPage(User, selectedUser));
+            Navigation.PushAsync(new FollowersPage(User, SelectedUser));
         }
 
-        private void OnSerialsClicked(object obj)
+        private void OnFilmsClicked(object obj)
         {
-            Navigation.PushAsync(new FollowerWithSerialsPage(selectedUser, User));
+            Navigation.PushAsync(new FollowerPage(selectedUser, user));
         }
 
         private void OnMarksClicked(object obj)
         {
-            Navigation.PushAsync(new MarksPage(User, selectedUser, false));
+            Navigation.PushAsync(new MarksPage(user, selectedUser, true));
         }
 
         private void OnWatchlistClicked(object obj)
         {
-            Navigation.PushAsync(new WatchlistPage(User, selectedUser, false));
+            Navigation.PushAsync(new WatchlistPage(user, selectedUser, true));
         }
 
         private void OnLoveClicked(object obj)
         {
-            Navigation.PushAsync(new LovePage(User, selectedUser, false));
+            Navigation.PushAsync(new LovePage(user, selectedUser, true));
         }
 
         private void OnLettersClicked(object obj)
         {
-            Navigation.PushAsync(new LettersOfUserPage(User, selectedUser, false));
-        }
-
-        private void OnBackClicked(object obj) //стрелка назад
-        {
-            Navigation.PopAsync();
+            Navigation.PushAsync(new LettersOfUserPage(user, selectedUser, true));
         }
 
         private void OnButtonClicked(object obj) //клик на кнопку отписаться/подписаться - что-то меняем в бд

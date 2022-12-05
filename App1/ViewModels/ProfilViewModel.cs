@@ -68,12 +68,12 @@ namespace App1.ViewModels
 
         private void OnFollowingClicked(object obj)
         {
-            Navigation.PushAsync(new FollowingPage());
+            Navigation.PushAsync(new FollowingPage(User, User));
         }
 
         private void OnFollowersClicked(object obj)
         {
-            Navigation.PushAsync(new FollowersPage());
+            Navigation.PushAsync(new FollowersPage(User, User));
         }
 
         private void OnSerialsClicked(object obj)

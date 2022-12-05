@@ -10,8 +10,6 @@ namespace App1.ViewModels
 {
     class SearchViewModel : BaseViewModel
     {
-        public Command ClickCommand { get; }
-
         public Command BackCommand { get; }
 
         private string search;
@@ -30,13 +28,11 @@ namespace App1.ViewModels
             films = new ObservableCollection<Film>();
             films1 = new ObservableCollection<Film>();
             films2 = new ObservableCollection<Film>();
-            ClickCommand = new Command(OnButtonClicked);
             BackCommand = new Command(OnBackClicked);
 
-            FilmList allFilms = new FilmList();
-            allFilms.GetFilms();
-            foreach (var f in allFilms.Films)
-                films.Add(f);
+            var allFilms = App.Database.GetFilms();
+            foreach (var f in allFilms)
+                films.Add(new Film { Id = f.Id, Age = f.Age, Country = f.Country, Description = f.Description, Genre = f.Genre, Name = f.Name, Original = f.Original, Poster = f.Poster, Seasons = f.Seasons, Timing = f.Timing, Year = f.Year });
         }
 
         public ObservableCollection<Film> Films
@@ -96,7 +92,10 @@ namespace App1.ViewModels
                     Film tmpfilm = value;
                     selectedFilm = null;
                     OnPropertyChanged("SelectedFilm");
-                    Navigation.PushAsync(new FilmPage(tmpfilm, selectedUser));
+                    if (tmpfilm.Seasons == null)
+                        Navigation.PushAsync(new FilmPage(tmpfilm, SelectedUser));
+                    else
+                        Navigation.PushAsync(new SerialPage(tmpfilm, SelectedUser));
                 }
             }
         }
@@ -116,12 +115,7 @@ namespace App1.ViewModels
 
         private void OnBackClicked(object obj) //стрелка назад
         {
-            Navigation.PopAsync();
-        }
-
-        private void OnButtonClicked(object obj) //переходим к фильму
-        {
-
+            Navigation.PushAsync(new ProfilPage(selectedUser));
         }
 
         private void Searching()

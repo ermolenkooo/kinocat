@@ -1,27 +1,39 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="App1.Views.ProfilWithSerials"
-             Background="white">
+             x:Class="App1.Views.FollowerWithSerialsPage">
     <ContentPage.Content>
         <StackLayout Padding="0,0,0,0" VerticalOptions="Start" Background="white">
-            <Image Source="shapka.png" Margin="0, 0, 0, 0"/>
-            <Image Source="{Binding User.Image}" WidthRequest="90" HorizontalOptions="Start" Margin="40, -60, 0, 0"/>
-            <Label Text="{Binding User.Username}" FontSize="22" TextColor="Black" HorizontalOptions="Start" Margin="45, 0" FontAttributes="Bold"></Label>
-            <Image Source="minicircle.png" Margin="0, -180, 15, 0" HorizontalOptions="End"></Image>
-            <Image Source="search.png" Margin="0, -26, 22, 0" HorizontalOptions="End" WidthRequest="12">
+            <Image Source="shapka.png" Margin="10, 0, 0, 0"/>
+            <Image Source="arrow.png" Margin="12, -120, 0, 0" HorizontalOptions="Start">
                 <Image.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding SearchCommand}"></TapGestureRecognizer>
+                    <TapGestureRecognizer Command="{Binding BackCommand}"></TapGestureRecognizer>
                 </Image.GestureRecognizers>
             </Image>
-            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0, 160, 0, 0">
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0, 90, 0, 0">
+                <Image Source="{Binding SelectedUser.Image}" WidthRequest="100" HorizontalOptions="Start" Margin="0, -80, 10, 0"/>
+                <Button  Margin="0, -35, 0, 25" Padding="100, 5" Command="{Binding ClickCommand}" ImageSource="checkmark.png" BackgroundColor="Gray" Background="white" CornerRadius="60" BorderColor="Black" BorderWidth="1">
+                    <Button.Triggers>
+                        <DataTrigger Binding="{Binding SelectedUser.ReadMe}" Value="False" TargetType="Button">
+                            <Setter Property="Background" Value="black" />
+                            <Setter Property="ImageSource" Value="checkmark1.png"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding SelectedUser.ReadMe}" Value="True" TargetType="Button">
+                            <Setter Property="Background" Value="white" />
+                            <Setter Property="ImageSource" Value="checkmark.png"/>
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+            </StackLayout>
+            <Label Text="{Binding SelectedUser.Username}" FontSize="22" TextColor="Black" HorizontalOptions="Start" Margin="45, -10, 45, 0" FontAttributes="Bold"></Label>
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0, 10, 0, 0">
                 <StackLayout Orientation="Horizontal">
 
                     <StackLayout.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding FollowingCommand}"/>
                     </StackLayout.GestureRecognizers>
 
-                    <Label Text="{Binding User.CountOfFollowing}" FontSize="22" TextColor="Black" FontAttributes="Bold"></Label>
+                    <Label Text="{Binding SelectedUser.CountOfFollowing}" FontSize="22" TextColor="Black" FontAttributes="Bold"></Label>
                     <Label Text="подписки" FontSize="22" TextColor="Black"></Label>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" Margin="20, 0, 0, 0">
@@ -30,7 +42,7 @@
                         <TapGestureRecognizer Command="{Binding FollowersCommand}"/>
                     </StackLayout.GestureRecognizers>
 
-                    <Label Text="{Binding User.CountOfFollowers}" FontSize="22" TextColor="Black" FontAttributes="Bold"></Label>
+                    <Label Text="{Binding SelectedUser.CountOfFollowers}" FontSize="22" TextColor="Black" FontAttributes="Bold"></Label>
                     <Label Text="подписчики" FontSize="22" TextColor="Black"></Label>
                 </StackLayout>
             </StackLayout>

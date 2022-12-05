@@ -25,12 +25,10 @@ namespace App1.ModelsForDB
         public List<UserDB> GetUsers()
         {
             return database.GetAllWithChildren<UserDB>();
-            //return database.Table<UserDB>().ToList();
         }
         public UserDB GetUser(int id)
         {
             return database.GetWithChildren<UserDB>(id);
-            //return database.Get<UserDB>(id);
         }
         public int DeleteUser(int id)
         {
@@ -41,25 +39,20 @@ namespace App1.ModelsForDB
             if (item.Id != 0)
             {
                 database.UpdateWithChildren(item);
-                //database.Update(item);
-                //return item.Id;
             }
             else
             {
                 database.InsertWithChildren(item);
-                //return database.Insert(item);
             }
         }
 
         public List<FilmDB> GetFilms()
         {
             return database.GetAllWithChildren<FilmDB>();
-            //return database.Table<FilmDB>().ToList();
         }
         public FilmDB GetFilm(int id)
         {
             return database.GetWithChildren<FilmDB>(id);
-            //return database.Get<FilmDB>(id);
         }
         public int DeleteFilm(int id)
         {
@@ -69,14 +62,11 @@ namespace App1.ModelsForDB
         {
             if (item.Id != 0)
             {
-                //database.Update(item);
                 database.UpdateWithChildren(item);
-                //return item.Id;
             }
             else
             {
                 database.InsertWithChildren(item);
-                //database.Insert(item);
             }
         }
 
